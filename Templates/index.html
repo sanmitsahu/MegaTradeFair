@@ -1,0 +1,143 @@
+{% extends "layout.html" %}
+{% block body %}
+  <h1 style="text-align:center;margin: 15px;">Welcome to the Mega Trade Fair.</h1>
+  <p></p>
+<br>
+<br>
+   <div align="center">
+     <p>Select Dashboard.</p>
+    <form id="index" action="/dashboard" method="POST" enctype="multipart/form-data">
+        <select id="mySelect" name = "fair_tables" >
+            <option value="bookingdashboard">Booking Dashboard</option>
+            <option value="industrybooking">Industry Booking</option>
+            <option value="industrybusiness">Industry Business</option>
+        </select>
+      <br><br>
+        <input type="submit" value="Submit" class="btn btn-primary btn-lg">
+    </form>
+    </div>
+
+    <div id="result">
+    {% if table_name is defined %}
+      <br>
+      <br>
+        <div class="container" style="overflow-x:auto;">
+            <table class=" table table-striped table-hover table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        {% for name in column_names %}
+                            <th>{{name}}</th>
+                        {% endfor %}
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data_value %}
+                    <tr>
+                        {% for contents in row %}
+                            <td>{{contents}}</td>
+                        {% endfor %}
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+    <h5 style="margin-top: 5%; text-align: center;">Please select a dashboard.</h5>  
+    {% endif %}
+
+</div>
+    <div style="margin: 5%;" align="center">
+        <canvas id="myChart" width="900" height="400"></canvas>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ labels[0] | safe }},
+                datasets: [{
+                    label: 'Count of exhibitor belonging to an industry',
+                    data: {{ values[0] | safe }},
+                    fill: false,
+                    borderColor: 'rgb(25, 99, 232)',
+                    backgroundColor: ["rgb(76, 0, 153)", "rgb(255, 128, 0)", "rgb(50, 102,20)", "rgb(15, 15, 153)", "rgb(153, 15, 15)", "blue"],
+                    lineTension: 0.1
+                }]
+            },
+
+            options: {
+                responsive: false,
+                  scales: {
+    yAxes: [{
+      scaleLabel: {
+        display: true,
+        labelString: 'Number of Exhibitors'
+      },
+      ticks: {
+                beginAtZero: true
+            }
+    }],
+    xAxes: [{
+      scaleLabel: {
+        display: true,
+        labelString: 'Industry Name'
+      },
+      ticks: {
+                beginAtZero: true
+            }
+    }]
+  }
+            }
+        });
+    </script>
+
+    <div style="margin: 5%;" align="center">
+        <canvas id="graph_industry_amount" width="900" height="400"></canvas>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('graph_industry_amount').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ labels[1] | safe }},
+                datasets: [{
+                    label: 'Amount spent by exhibitor belonging to an industry on Booking',
+                    data: {{ values[1] | safe }},
+                    fill: false,
+                    borderColor: 'rgb(25, 99, 232)',
+                    backgroundColor: ["rgb(76, 0, 153)", "rgb(255, 128, 0)", "rgb(50, 102,20)", "rgb(15, 15, 153)", "rgb(153, 15, 15)", "blue"],
+                    lineTension: 0.1
+                }]
+            },
+
+            options: {
+                responsive: false,
+                  scales: {
+    yAxes: [{
+      scaleLabel: {
+        display: true,
+        labelString: 'Amount of money spent on Booking'
+      },
+      ticks: {
+                beginAtZero: true
+            }
+    }],
+    xAxes: [{
+      scaleLabel: {
+        display: true,
+        labelString: 'Industry Name'
+      },
+      ticks: {
+                beginAtZero: true
+            }
+    }]
+  }
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block body %}
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <h5 class='flashmessage' style="text-align: center;background-color: lightgray;">{{ message }}</h5>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <p>Select a table name from the list.</p>
+    <form id="view" action="/view" method="POST" enctype="multipart/form-data">
+        <select id="mySelect" name = "fair_tables">
+            <option value="country">Country</option>
+            <option value="state">State</option>
+            <option value="industry">Industry</option>
+            <option value="venue">Venue</option>
+            <option value="stall">Stall</option>  
+            <option value="megaconsumercard">Consumer Card</option>
+            <option value="fair_event">Event</option>
+            <option value="visitor">Visitor</option>
+            <option value="exhibitor">Exhibitor</option>
+            <option value="booking">Booking</option>
+            <option value="bookingstallmap">Booking Stall Map</option>
+        </select>
+        <input class="btn btn-primary btn-sm" type="submit" value="Submit">
+    </form>
+    <div id="result">
+    {% if table_name is defined %}
+        You have selected: {{ table_name }}
+        <div class="container" style="margin: 10px;">
+            <a href="/add/{{table_name}}" class="btn btn-primary btn-sm">Add a new record</a>
+        </div>
+        <div class="container" style="overflow-x:auto;">
+            <table class=" table table-striped table-hover table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        {% for name in column_names %}
+                            <th>{{name}}</th>
+                        {% endfor %}
+                        <th>Edit</th>
+                    </tr>
+                </thead> 
+                <tbody>
+                    {% for row in data %}
+                    <tr>
+                        {% for contents in row %}    
+                            <td>{{contents}}</td>
+                        {% endfor %}
+                        <td>
+                            <a href="/edit/{{table_name}}/{{row[0]}}" class="btn btn-secondary btn-sm">edit</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+    <h5 style="margin-top: 5%;">Please select a table.</h5>  
+    {% endif %}
+    </div>
+{% endblock %}

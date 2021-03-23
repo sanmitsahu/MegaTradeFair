@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block body %}
+  <div class="row">
+    <div class="col-md-4 offset-md-4">
+      <div class="card card-body">
+        <form class="px-2 py-3" action="/add/{{tablename}}" method="POST" >
+          {% for i in column_names %}
+            <div class="mb-3">
+              {% if i=="Pincode" or i=="Stall No." or i=="Stall Size" %}
+              <p>{{i}} <input type = "number" name = "value_{{ loop.index }}" /></p>
+              {% elif i=="Gender" %}
+              <label>{{i}} :</label>
+              <p><input type = "radio" value = 1 name = "value_{{ loop.index }}" /> Male </p>
+              <p><input type = "radio" value = 0 name = "value_{{ loop.index }}" /> Female </p>
+              {% elif i=="Booking status" %}
+              <label>{{i}} :</label>
+              <p><input type = "radio" value = 1 name = "value_{{ loop.index }}" /> Booked </p>
+              <p><input type = "radio" value = 0 name = "value_{{ loop.index }}" /> Not booked </p>
+              <!-- <p>{{i}} <input type = "number" pattern="[0-1]*" name = "value_{{ loop.index }}" /></p> -->
+              {% elif i=="Date-Of-Birth" or i=="Booking Date" or i=="Booking starts" or i=="Start Date" or i=="End date" or i=="Spend Date" %}
+              <p>{{i}} <input type = "date" name = "value_{{ loop.index }}" /></p>
+              {% elif i=="Total Amount" or  i=="Stall Price" or  i=="Booking Total Amount"%}
+              <p>{{i}} <input type = "number" step="0.01" name = "value_{{ loop.index }}" /></p>
+              {% else %}
+              <p>{{i}} <input type = "text" name = "value_{{ loop.index }}" /></p>
+              {% endif %}
+            </div>
+          {% endfor %}
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">
+              Add
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

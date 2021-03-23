@@ -1,0 +1,53 @@
+html,body
+        {
+            width: 100%;
+            margin: 0px;
+            padding: 0px;
+            overflow-x: hidden; 
+        }
+
+        .container-sm{
+        width: 30%; 
+        background-color: rgb(238, 236, 229); 
+        margin-top: 20px;
+        }
+
+        .dialog{
+        padding: 5%;
+        }
+
+        @media screen and (max-width: 1055px){
+        .container-sm{
+        width: 40%; 
+        background-color: rgb(238, 236, 229); 
+        margin-top: 20px;
+        }
+
+        .dialog{
+        padding: 5%;
+        }
+    }
+
+        @media screen and (max-width: 768px){
+        .container-sm{
+            width: 50%; 
+            background-color: rgb(238, 236, 229); 
+            margin-top: 20px;
+        }
+
+        .dialog{
+            padding: 5%;
+        }
+        }
+
+        @media screen and (max-width: 560px){
+            .container-sm{
+            width: 100%; 
+            background-color: rgb(238, 236, 229); 
+            margin-top: 20px;
+            }
+
+            .dialog{
+            padding: 5%;
+            }
+        }
